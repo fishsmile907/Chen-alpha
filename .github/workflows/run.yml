@@ -1,0 +1,25 @@
+name: run-stock-scan
+
+on:
+  schedule:
+    - cron: "10 9 * * 1-5"  # 台灣時間約 17:10（平日）
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: install packages
+        run: pip install requests pandas
+
+      - name: run script
+        run: python main.py
